@@ -51,7 +51,7 @@ git commit -m "Initial project structure setup"
 
 
 
-# Day 02 — Frontend Service Initialization
+## Day 02 — Frontend Service Initialization
 
 ## Goal
 Today my goal was to initialize the frontend service using Node.js and prepare it so it can run independently and later integrate with other microservices.
