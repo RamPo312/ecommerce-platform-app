@@ -34,7 +34,32 @@ Finally, I updated the README for this service and followed the Git feature bran
 ---
 
 ## Commands used
+```bash
+cd ecommerce-platform-app/order-service
+
+mvn spring-boot:run
+mvn clean package
+
+docker build -t ecommerce-order-service .
+docker run -p 8002:8002 ecommerce-order-service
+
+git checkout dev
+git pull origin dev
+git checkout -b feature/order-service-init
+git add .
+git commit -m "Day 4: Initialize Java order-service with Spring Boot and Dockerfile"
+git push origin feature/order-service-init
+git checkout dev
+git merge feature/order-service-init
+git push origin dev
 
 ### Java service setup
 ```bash
 cd ecommerce-platform-app/order-service
+
+### What to learn
+How to initialize a Java microservice using Spring Boot
+How to build simple REST endpoints using a controller
+Difference between a custom /health endpoint and the actuator health endpoint
+How multi-stage Dockerfiles help build Java applications more efficiently
+How to continue daily development using feature branches
