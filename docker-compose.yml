@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+    container_name: ecommerce-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - product-service
+      - order-service
+    restart: unless-stopped
+
+  product-service:
+    build:
+      context: ./product-service
+    container_name: ecommerce-product-service
+    ports:
+      - "8001:8001"
+    restart: unless-stopped
+
+  order-service:
+    build:
+      context: ./order-service
+    container_name: ecommerce-order-service
+    ports:
+      - "8002:8002"
+    restart: unless-stopped
