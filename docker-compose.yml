@@ -18,6 +18,10 @@ services:
     container_name: ecommerce-product-service
     ports:
       - "8001:8001"
+    environment:
+      DATABASE_URL: postgresql://product:product@product-db:5432/productdb
+    depends_on:
+      - product-db
     restart: unless-stopped
 
   order-service:
@@ -26,4 +30,36 @@ services:
     container_name: ecommerce-order-service
     ports:
       - "8002:8002"
+    depends_on:
+      - order-db
     restart: unless-stopped
+
+  product-db:
+    image: postgres:15
+    container_name: product-db
+    environment:
+      POSTGRES_USER: product
+      POSTGRES_PASSWORD: product
+      POSTGRES_DB: productdb
+    ports:
+      - "5433:5432"
+    volumes:
+      - product-db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  order-db:
+    image: postgres:15
+    container_name: order-db
+    environment:
+      POSTGRES_USER: order
+      POSTGRES_PASSWORD: order
+      POSTGRES_DB: orderdb
+    ports:
+      - "5434:5432"
+    volumes:
+      - order-db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  product-db-data:
+  order-db-data:

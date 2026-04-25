@@ -1,13 +1,22 @@
 package com.ecommerce.orderservice.controller;
 
+import com.ecommerce.orderservice.model.OrderEntity;
+import com.ecommerce.orderservice.repository.OrderRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
 public class OrderController {
+
+    private final OrderRepository orderRepository;
+
+    public OrderController(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
 
     @GetMapping("/")
     public Map<String, String> root() {
@@ -27,14 +36,11 @@ public class OrderController {
 
     @GetMapping("/orders")
     public Map<String, Object> getOrders() {
-        List<Map<String, Object>> orders = List.of(
-                Map.of("id", 1, "product", "Laptop", "quantity", 1, "status", "CREATED"),
-                Map.of("id", 2, "product", "Headphones", "quantity", 2, "status", "CREATED")
-        );
+        List<OrderEntity> orders = orderRepository.findAll();
 
-        return Map.of(
-                "count", orders.size(),
-                "items", orders
-        );
+        Map<String, Object> response = new HashMap<>();
+        response.put("count", orders.size());
+        response.put("items", orders);
+        return response;
     }
 }
